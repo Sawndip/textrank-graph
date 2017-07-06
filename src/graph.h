@@ -9,9 +9,24 @@ namespace graph {
     public:
         node(std::string data, double score);
 
+        void add_variation(std::string data);
+        void remove_variation(std::string data);
+
+        bool has_variation(std::string data);
+
+        double get_averaged_score();
+        double get_score();
+        std::string get_data();
+        std::vector<std::string> get_variations();
+
     private:
         double score;
         std::string data;
+
+        // We are using a vector instead of an unordered_set because a linear
+        // search is going to be faster than a hash table lookup and compare for
+        // the reasonable small number of variations.
+        std::vector<std::string> variations;
     };
 
     class edge {
