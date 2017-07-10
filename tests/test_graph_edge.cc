@@ -1,5 +1,7 @@
 #include "../src/graph.h"
 
+#include <memory>
+
 #include <catch/catch.hpp>
 
 SCENARIO("checking edge equality", "[edge]") {
