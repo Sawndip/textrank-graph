@@ -35,6 +35,8 @@ namespace graph {
     public:
         edge(std::shared_ptr<node> node_i, std::shared_ptr<node> node_f);
 
+        bool operator==(edge const& e);
+
         std::shared_ptr<node> node_i;  // initial node
         std::shared_ptr<node> node_f;  // final node
     };
