@@ -9,6 +9,8 @@ namespace graph {
     public:
         node(std::string data, double score);
 
+        bool operator==(node const& n);
+
         void add_variation(std::string data);
         void remove_variation(std::string data);
 

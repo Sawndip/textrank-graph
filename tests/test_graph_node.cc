@@ -4,6 +4,25 @@
 
 #include <catch/catch.hpp>
 
+SCENARIO("checking equality of nodes", "[node]") {
+    GIVEN("nodes with equal data") {
+        graph::node node_a("N", 0);
+        graph::node node_b("N", 0);
+
+        THEN("should return true") {
+            REQUIRE(node_a == node_b);
+        }
+    }
+
+    GIVEN("nodes with different data") {
+        graph::node node_a("A", 0);
+        graph::node node_b("B", 0);
+
+        THEN("should return false") {
+            REQUIRE_FALSE(node_a == node_b);
+        }
+    }
+}
 
 SCENARIO("adding variation to node", "[node]") {
     GIVEN("a node without variations") {

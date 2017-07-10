@@ -11,6 +11,10 @@ node::node(std::string data, double score) {
     this->score = score;
 }
 
+bool node::operator==(node const& n) {
+    return this->data == n.data;
+}
+
 void node::add_variation(std::string data) {
     if (this->has_variation(data)) return;
     this->variations.push_back(data);
