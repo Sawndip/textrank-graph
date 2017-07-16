@@ -11,10 +11,11 @@ adjacency_list::adjacency_list(size_t n_nodes) {
     if (n_nodes > 0) this->adj_list.reserve(n_nodes);
 }
 
-void adjacency_list::add_node(std::shared_ptr<node> n) {
-    if (this->contains_node(n)) return;
+void adjacency_list::add_node(std::shared_ptr<node> new_node) {
+    if (this->contains_node(new_node)) return;
 
-    adjacency_list_entry new_entry = std::make_tuple(n, std::vector<edge>{});
+    adjacency_list_entry new_entry =
+        std::make_tuple(new_node, std::vector<edge>{});
 
     if (this->size == this->adj_list.size()) {
         this->adj_list.push_back(new_entry);
@@ -23,6 +24,14 @@ void adjacency_list::add_node(std::shared_ptr<node> n) {
     }
 
     this->size++;
+}
+
+void adjacency_list::remove_node(std::shared_ptr<node> remove_node) {
+    auto it = this->find_node(remove_node);
+    if (it == this->adj_list.end()) return;
+
+    this->adj_list.erase(it);
+    this->size--;
 }
 
 size_t adjacency_list::get_size() {
