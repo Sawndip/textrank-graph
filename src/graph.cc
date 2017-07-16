@@ -12,7 +12,7 @@ adjacency_list::adjacency_list(size_t n_nodes) {
 }
 
 void adjacency_list::add_node(std::shared_ptr<node> n) {
-    if (!this->contains_node(n)) return;
+    if (this->contains_node(n)) return;
 
     adjacency_list_entry new_entry = std::make_tuple(n, std::vector<edge>{});
 
