@@ -9,7 +9,7 @@ SCENARIO("constructing an adjacency list", "[graph][adjacency_list]") {
     THEN("should create new empty adjacency list") {
         graph::adjacency_list new_graph(0);
 
-        REQUIRE(new_graph.get_size() == 0);
+        REQUIRE(new_graph.get_nodes_count() == 0);
         REQUIRE(new_graph.get_nodes().empty());
     }
 }
@@ -24,7 +24,7 @@ SCENARIO("adding a node", "[graph][adjacency_list]") {
             new_graph.add_node(std::make_shared<graph::node>(node_a));
 
             THEN("should have updated size") {
-                REQUIRE(new_graph.get_size() == 1);
+                REQUIRE(new_graph.get_nodes_count() ==1);
             }
 
             THEN("should contain correct nodes") {
@@ -42,7 +42,7 @@ SCENARIO("adding a node", "[graph][adjacency_list]") {
             new_graph.add_node(std::make_shared<graph::node>(node_a));
 
             THEN("should have updated size") {
-                REQUIRE(new_graph.get_size() == 1);
+                REQUIRE(new_graph.get_nodes_count() == 1);
             }
 
             THEN("should contain correct nodes") {
@@ -66,13 +66,13 @@ SCENARIO("removing a node", "[graph][adjacency_list]") {
         new_graph.add_node(std::make_shared<graph::node>(node_a));
         new_graph.add_node(std::make_shared<graph::node>(node_b));
 
-        CHECK(new_graph.get_size() == 2);
+        CHECK(new_graph.get_nodes_count() == 2);
 
         WHEN("removing nodes") {
             new_graph.remove_node(std::make_shared<graph::node>(node_a));
 
             THEN("should have updated size") {
-                REQUIRE(new_graph.get_size() == 1);
+                REQUIRE(new_graph.get_nodes_count() == 1);
             }
 
             THEN("should contain correct nodes") {

@@ -32,15 +32,7 @@ bool node::has_variation(std::string data) {
 }
 
 double node::get_averaged_score() {
-    return this->get_score() / this->get_variations().size();
-}
-
-double node::get_score() {
-    return this->score;
-}
-
-std::string node::get_data() {
-    return this->data;
+    return this->score / this->get_variations().size();
 }
 
 std::vector<std::string> node::get_variations() {

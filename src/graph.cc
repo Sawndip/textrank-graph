@@ -5,7 +5,7 @@
 using namespace graph;
 
 adjacency_list::adjacency_list(size_t n_nodes) {
-    this->size = 0;
+    this->nodes_count = 0;
     this->adj_list = std::vector<adjacency_list_entry>{};
 
     if (n_nodes > 0) this->adj_list.reserve(n_nodes);
@@ -17,13 +17,13 @@ void adjacency_list::add_node(std::shared_ptr<node> new_node) {
     adjacency_list_entry new_entry =
         std::make_tuple(new_node, std::vector<edge>{});
 
-    if (this->size == this->adj_list.size()) {
+    if (this->nodes_count == this->adj_list.size()) {
         this->adj_list.push_back(new_entry);
     } else {
-        this->adj_list[this->size] = new_entry;
+        this->adj_list[this->nodes_count] = new_entry;
     }
 
-    this->size++;
+    this->nodes_count++;
 }
 
 void adjacency_list::remove_node(std::shared_ptr<node> remove_node) {
@@ -31,16 +31,16 @@ void adjacency_list::remove_node(std::shared_ptr<node> remove_node) {
     if (it == this->adj_list.end()) return;
 
     this->adj_list.erase(it);
-    this->size--;
+    this->nodes_count--;
 }
 
-size_t adjacency_list::get_size() {
-    return this->size;
+size_t adjacency_list::get_nodes_count() {
+    return this->nodes_count;
 }
 
 std::vector<std::shared_ptr<node>> adjacency_list::get_nodes() {
     std::vector<std::shared_ptr<node>> nodes{};
-    nodes.reserve(this->size);
+    nodes.reserve(this->nodes_count);
 
     for (auto const& entry : this->adj_list) {
         nodes.push_back(std::get<0>(entry));

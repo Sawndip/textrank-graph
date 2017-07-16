@@ -6,9 +6,17 @@
 #include <tuple>
 #include <vector>
 
+// TODO: Inline documentation.
+// For node variations we are using a vector instead of an unordered_set
+// because a linear search is going to be faster than a hash table lookup and
+// compare for the reasonable small number of variations.
+
 namespace graph {
     class node {
     public:
+        double score;
+        std::string data;
+
         node(std::string data, double score);
 
         bool operator==(node const& n);
@@ -19,17 +27,9 @@ namespace graph {
         bool has_variation(std::string data);
 
         double get_averaged_score();
-        double get_score();
-        std::string get_data();
         std::vector<std::string> get_variations();
 
     private:
-        double score;
-        std::string data;
-
-        // We are using a vector instead of an unordered_set because a linear
-        // search is going to be faster than a hash table lookup and compare for
-        // the reasonable small number of variations.
         std::vector<std::string> variations;
     };
 
@@ -59,7 +59,7 @@ namespace graph {
 
         bool contains_node(std::shared_ptr<node> search_node);
 
-        size_t get_size();
+        size_t get_nodes_count();
         std::vector<std::shared_ptr<node>> get_nodes();
 
         // List of nodes that are connected to the specified node.
@@ -69,7 +69,7 @@ namespace graph {
         std::vector<node> get_connected_from(node);
 
     private:
-        size_t size;
+        size_t nodes_count;
 
         std::vector<adjacency_list_entry> adj_list;
 
