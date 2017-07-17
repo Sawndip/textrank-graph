@@ -7,9 +7,10 @@
 #include <vector>
 
 // TODO: Inline documentation.
-// For node variations we are using a vector instead of an unordered_set
-// because a linear search is going to be faster than a hash table lookup and
-// compare for the reasonable small number of variations.
+
+// For node variations we are using a vector instead of an unordered_set because a linear
+// search is going to be faster than a hash table lookup and compare for the reasonable
+// small number of variations.
 
 namespace graph {
     class node {
@@ -33,8 +34,8 @@ namespace graph {
         std::vector<std::string> variations;
     };
 
-    typedef std::pair<node, std::vector<std::shared_ptr<node>>>
-        adjacency_list_entry;
+    typedef std::shared_ptr<node> node_ptr;
+    typedef std::pair<node, std::vector<node_ptr>> adjacency_list_entry;
     typedef std::vector<adjacency_list_entry>::iterator adj_list_iterator;
 
     class adjacency_list {
@@ -42,17 +43,15 @@ namespace graph {
         adjacency_list(size_t n_nodes);
 
         void add_node(node new_node);
-        void remove_node(std::shared_ptr<node> remove_node);
+        void remove_node(node_ptr remove_node);
 
-        void add_edge(std::shared_ptr<node> node_i,
-                      std::shared_ptr<node> node_f);
-        void remove_edge(std::shared_ptr<node> node_i,
-                         std::shared_ptr<node> node_f);
+        void add_edge(node_ptr node_i, node_ptr node_f);
+        void remove_edge(node_ptr node_i, node_ptr node_f);
 
-        bool contains_node(std::shared_ptr<node> search_node);
+        bool contains_node(node_ptr search_node);
 
         size_t get_nodes_count();
-        std::vector<std::shared_ptr<node>> get_nodes();
+        std::vector<node_ptr> get_nodes();
 
         // List of nodes that are connected to the specified node.
         std::vector<node> get_connected_to(node);
@@ -65,7 +64,7 @@ namespace graph {
 
         std::vector<adjacency_list_entry> adj_list;
 
-        inline adj_list_iterator find_entry(std::shared_ptr<node> search_node) {
+        inline adj_list_iterator find_entry(node_ptr search_node) {
             // clang-format off
             return std::find_if(
                 this->adj_list.begin(), this->adj_list.end(),

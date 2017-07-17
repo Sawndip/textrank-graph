@@ -15,7 +15,7 @@ void adjacency_list::add_node(node new_node) {
     if (this->contains_node(std::make_shared<node>(new_node))) return;
 
     adjacency_list_entry new_entry =
-        std::make_pair(new_node, std::vector<std::shared_ptr<node>>{});
+        std::make_pair(new_node, std::vector<node_ptr>{});
 
     if (this->nodes_count == this->adj_list.size()) {
         this->adj_list.push_back(new_entry);
@@ -26,7 +26,7 @@ void adjacency_list::add_node(node new_node) {
     this->nodes_count++;
 }
 
-void adjacency_list::remove_node(std::shared_ptr<node> remove_node) {
+void adjacency_list::remove_node(node_ptr remove_node) {
     auto it = this->find_entry(remove_node);
     if (it == this->adj_list.end()) return;
 
@@ -34,14 +34,14 @@ void adjacency_list::remove_node(std::shared_ptr<node> remove_node) {
     this->nodes_count--;
 }
 
-void adjacency_list::add_edge(std::shared_ptr<node> node_i, std::shared_ptr<node> node_f) {
+void adjacency_list::add_edge(node_ptr node_i, node_ptr node_f) {
     auto it = this->find_entry(node_i);
     if (it == this->adj_list.end()) this->add_node(*node_i);
 
     it->second.push_back(node_f);
 }
 
-bool adjacency_list::contains_node(std::shared_ptr<node> search_node) {
+bool adjacency_list::contains_node(node_ptr search_node) {
     return this->find_entry(search_node) != this->adj_list.end();
 }
 
@@ -49,8 +49,8 @@ size_t adjacency_list::get_nodes_count() {
     return this->nodes_count;
 }
 
-std::vector<std::shared_ptr<node>> adjacency_list::get_nodes() {
-    std::vector<std::shared_ptr<node>> nodes{};
+std::vector<node_ptr> adjacency_list::get_nodes() {
+    std::vector<node_ptr> nodes{};
     nodes.reserve(this->nodes_count);
 
     for (auto const& entry : this->adj_list) {
