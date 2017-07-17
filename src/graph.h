@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <memory>
 #include <string>
-#include <tuple>
+#include <utility>
 #include <vector>
 
 // TODO: Inline documentation.
@@ -43,7 +43,7 @@ namespace graph {
         std::shared_ptr<node> node_f;  // final node
     };
 
-    typedef std::tuple<std::shared_ptr<node>, std::vector<edge>>
+    typedef std::pair<node, std::vector<std::shared_ptr<node>>>
         adjacency_list_entry;
     typedef std::vector<adjacency_list_entry>::iterator adj_list_iterator;
 
@@ -51,10 +51,10 @@ namespace graph {
     public:
         adjacency_list(size_t n_nodes);
 
-        void add_node(std::shared_ptr<node> n);
-        void remove_node(std::shared_ptr<node> n);
+        void add_node(node new_node);
+        void remove_node(std::shared_ptr<node> remove_node);
 
-        void add_edge(edge e);
+        void add_edge(std::shared_ptr<node> node_i, std::shared_ptr<node> node_f);
         void remove_edge(edge e);
 
         bool contains_node(std::shared_ptr<node> search_node);
@@ -73,12 +73,12 @@ namespace graph {
 
         std::vector<adjacency_list_entry> adj_list;
 
-        inline adj_list_iterator find_node(std::shared_ptr<node> search_node) {
+        inline adj_list_iterator find_entry(std::shared_ptr<node> search_node) {
             // clang-format off
             return std::find_if(
                 this->adj_list.begin(), this->adj_list.end(),
                 [search_node](adjacency_list_entry& entry) {
-                    return *std::get<0>(entry) == *search_node;
+                    return entry.first == *search_node;
                 }
             );
             // clang-format on

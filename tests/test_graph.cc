@@ -21,7 +21,7 @@ SCENARIO("adding a node", "[graph][adjacency_list]") {
 
         WHEN("adding nodes") {
             graph::adjacency_list new_graph(1);
-            new_graph.add_node(std::make_shared<graph::node>(node_a));
+            new_graph.add_node(node_a);
 
             THEN("should have updated size") {
                 REQUIRE(new_graph.get_nodes_count() ==1);
@@ -39,7 +39,7 @@ SCENARIO("adding a node", "[graph][adjacency_list]") {
 
         WHEN("adding more nodes than specified") {
             graph::adjacency_list new_graph(0);
-            new_graph.add_node(std::make_shared<graph::node>(node_a));
+            new_graph.add_node(node_a);
 
             THEN("should have updated size") {
                 REQUIRE(new_graph.get_nodes_count() == 1);
@@ -63,8 +63,8 @@ SCENARIO("removing a node", "[graph][adjacency_list]") {
         graph::node node_b("B", 0);
 
         graph::adjacency_list new_graph(2);
-        new_graph.add_node(std::make_shared<graph::node>(node_a));
-        new_graph.add_node(std::make_shared<graph::node>(node_b));
+        new_graph.add_node(node_a);
+        new_graph.add_node(node_b);
 
         CHECK(new_graph.get_nodes_count() == 2);
 
