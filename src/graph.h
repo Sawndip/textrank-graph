@@ -33,16 +33,6 @@ namespace graph {
         std::vector<std::string> variations;
     };
 
-    class edge {
-    public:
-        edge(std::shared_ptr<node> node_i, std::shared_ptr<node> node_f);
-
-        bool operator==(edge const& e);
-
-        std::shared_ptr<node> node_i;  // initial node
-        std::shared_ptr<node> node_f;  // final node
-    };
-
     typedef std::pair<node, std::vector<std::shared_ptr<node>>>
         adjacency_list_entry;
     typedef std::vector<adjacency_list_entry>::iterator adj_list_iterator;
@@ -54,8 +44,10 @@ namespace graph {
         void add_node(node new_node);
         void remove_node(std::shared_ptr<node> remove_node);
 
-        void add_edge(std::shared_ptr<node> node_i, std::shared_ptr<node> node_f);
-        void remove_edge(edge e);
+        void add_edge(std::shared_ptr<node> node_i,
+                      std::shared_ptr<node> node_f);
+        void remove_edge(std::shared_ptr<node> node_i,
+                         std::shared_ptr<node> node_f);
 
         bool contains_node(std::shared_ptr<node> search_node);
 
