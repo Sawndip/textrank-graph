@@ -4,13 +4,12 @@ project(helium)
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Wall -Werror")
 
+# Include `include` directory.
+include_directories(include)
 
 ##############################################################################
 # Helium
 ##############################################################################
-
-# Include `include` directory.
-include_directories(include)
 
 # Find main sources in `src` directory.
 file(GLOB_RECURSE SOURCES src/*.cc src/*.h)
@@ -26,17 +25,19 @@ target_link_libraries(helium src)
 # Helium Testing
 ##############################################################################
 
+# Enable testing and add test command.
+enable_testing()
+
 # Find test files in `tests` directory.
 file(GLOB_RECURSE TESTS tests/*.cc)
 
-# Add libraries for source files and the catch header.
-add_library(Catch INTERFACE)
-target_include_directories(Catch INTERFACE include/catch)
+# Include Threads (required for Gtest).
+find_package(Threads REQUIRED)
+
+# Include GoogleTest.
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS})
 
 # Create executable for testing and link libraries.
 add_executable(test-helium tests/test_main.cc ${TESTS})
-target_link_libraries(test-helium Catch src)
-
-# Enable testing and add test command.
-enable_testing()
-add_test(NAME tests COMMAND test-helium)
+target_link_libraries(test-helium src pthread ${GTEST_BOTH_LIBRARIES})
