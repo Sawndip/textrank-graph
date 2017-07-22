@@ -1,88 +1,90 @@
-#include "../src/graph.h"
-
 #include <memory>
 #include <vector>
 
-#include <catch/catch.hpp>
+#include <gtest/gtest.h>
 
-SCENARIO("constructing an adjacency list", "[graph][adjacency_list]") {
-    THEN("should create new empty adjacency list") {
-        graph::adjacency_list new_graph(0);
+#include "../src/graph.h"
 
-        REQUIRE(new_graph.get_nodes_count() == 0);
-        REQUIRE(new_graph.get_nodes().empty());
-    }
+using namespace graph;
+
+TEST(graph, create_adjacency_list) {
+    adjacency_list new_graph(0);
+
+    ASSERT_EQ(new_graph.get_nodes_count(), 0);
+    ASSERT_TRUE(new_graph.get_nodes().empty());
 }
 
-SCENARIO("adding a node", "[graph][adjacency_list]") {
-    GIVEN("nodes to add to the graph") {
-        graph::node node_a("A", 0);
-        graph::node node_b("B", 0);
+TEST(graph, add_node) {
+    adjacency_list new_graph(1);
 
-        WHEN("adding nodes") {
-            graph::adjacency_list new_graph(1);
-            new_graph.add_node(node_a);
+    EXPECT_EQ(new_graph.get_nodes_count(), 0);
 
-            THEN("should have updated size") {
-                REQUIRE(new_graph.get_nodes_count() ==1);
-            }
+    node new_node("N", 0);
+    new_graph.add_node(new_node);
 
-            THEN("should contain correct nodes") {
-                REQUIRE(*(new_graph.get_nodes()[0]) == node_a);
-
-                REQUIRE(new_graph.contains_node(
-                    std::make_shared<graph::node>(node_a)));
-                REQUIRE_FALSE(new_graph.contains_node(
-                    std::make_shared<graph::node>(node_b)));
-            }
-        }
-
-        WHEN("adding more nodes than specified") {
-            graph::adjacency_list new_graph(0);
-            new_graph.add_node(node_a);
-
-            THEN("should have updated size") {
-                REQUIRE(new_graph.get_nodes_count() == 1);
-            }
-
-            THEN("should contain correct nodes") {
-                REQUIRE(*(new_graph.get_nodes()[0]) == node_a);
-
-                REQUIRE(new_graph.contains_node(
-                    std::make_shared<graph::node>(node_a)));
-                REQUIRE_FALSE(new_graph.contains_node(
-                    std::make_shared<graph::node>(node_b)));
-            }
-        }
-    }
+    ASSERT_EQ(new_graph.get_nodes_count(), 1);
+    ASSERT_TRUE(*(new_graph.get_nodes()[0]) == new_node);
 }
 
-SCENARIO("removing a node", "[graph][adjacency_list]") {
-    GIVEN("a graph with nodes") {
-        graph::node node_a("A", 0);
-        graph::node node_b("B", 0);
+TEST(graph, add_more_nodes_than_specified) {
+    adjacency_list new_graph(0);
 
-        graph::adjacency_list new_graph(2);
-        new_graph.add_node(node_a);
-        new_graph.add_node(node_b);
+    EXPECT_EQ(new_graph.get_nodes_count(), 0);
 
-        CHECK(new_graph.get_nodes_count() == 2);
+    node new_node("N", 0);
+    new_graph.add_node(new_node);
 
-        WHEN("removing nodes") {
-            new_graph.remove_node(std::make_shared<graph::node>(node_a));
+    ASSERT_EQ(new_graph.get_nodes_count(), 1);
+    ASSERT_TRUE(*(new_graph.get_nodes()[0]) == new_node);
+}
 
-            THEN("should have updated size") {
-                REQUIRE(new_graph.get_nodes_count() == 1);
-            }
+TEST(graph, add_duplicate_node) {
+    node new_node("N", 0);
+    adjacency_list new_graph(1);
 
-            THEN("should contain correct nodes") {
-                REQUIRE(*(new_graph.get_nodes()[0]) == node_b);
+    new_graph.add_node(new_node);
+    EXPECT_EQ(new_graph.get_nodes_count(), 1);
 
-                REQUIRE_FALSE(new_graph.contains_node(
-                    std::make_shared<graph::node>(node_a)));
-                REQUIRE(new_graph.contains_node(
-                    std::make_shared<graph::node>(node_b)));
-            }
-        }
-    }
+    new_graph.add_node(new_node);
+
+    ASSERT_EQ(new_graph.get_nodes_count(), 1);
+    ASSERT_TRUE(*(new_graph.get_nodes()[0]) == new_node);
+}
+
+TEST(graph, remove_node) {
+    node new_node("N", 0);
+    adjacency_list new_graph(1);
+
+    new_graph.add_node(new_node);
+    EXPECT_EQ(new_graph.get_nodes_count(), 1);
+
+    new_graph.remove_node(std::make_shared<node>(new_node));
+
+    ASSERT_EQ(new_graph.get_nodes_count(), 0);
+    ASSERT_TRUE(new_graph.get_nodes().empty());
+}
+
+TEST(graph, remove_node_not_in_graph) {
+    node node_a("A", 0);
+    node node_b("B", 0);
+    adjacency_list new_graph(1);
+
+    new_graph.add_node(node_a);
+    EXPECT_EQ(new_graph.get_nodes_count(), 1);
+
+    new_graph.remove_node(std::make_shared<node>(node_b));
+
+    ASSERT_EQ(new_graph.get_nodes_count(), 1);
+    ASSERT_TRUE(*(new_graph.get_nodes()[0]) == node_a);
+}
+
+TEST(graph, contains_node) {
+    node new_node("N", 0);
+    adjacency_list new_graph(1);
+
+    EXPECT_FALSE(new_graph.contains_node(std::make_shared<node>(new_node)));
+
+    new_graph.add_node(new_node);
+
+    EXPECT_TRUE(new_graph.contains_node(std::make_shared<node>(new_node)));
 }
