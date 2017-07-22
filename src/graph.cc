@@ -76,7 +76,8 @@ std::vector<node_ptr> adjacency_list::get_nodes() {
 }
 
 /**
- * Gets nodes that are connected to `node_f`.
+ * Get nodes that are connected to `node_f`.
+ * @param node_f Final node.
  *
  * TODO: Add tests.
  */
@@ -97,7 +98,8 @@ std::vector<node_ptr> adjacency_list::get_connected_to(node_ptr node_f) {
 }
 
 /**
- * Gets nodes that `node_i` is connected to.
+ * Get nodes that `node_i` is connected to.
+ * @param node_i Initial node.
  *
  * TODO: Add tests.
  */

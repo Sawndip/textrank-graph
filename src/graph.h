@@ -34,8 +34,19 @@ namespace graph {
         std::vector<std::string> variations;
     };
 
+    /**
+     * Pointer to a graph node.
+     */
     typedef std::shared_ptr<node> node_ptr;
+
+    /**
+     * Entry in the adjacency list.
+     */
     typedef std::pair<node, std::vector<node_ptr>> adjacency_list_entry;
+
+    /**
+     * Iterator of adjacency list entries.
+     */
     typedef std::vector<adjacency_list_entry>::iterator adj_list_iterator;
 
     class adjacency_list {
