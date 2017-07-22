@@ -32,36 +32,49 @@ void adjacency_list::remove_node(node_ptr remove_node) {
     auto it = this->find_entry(remove_node);
     if (it == this->adj_list.end()) return;
 
-    this->adj_list.erase(it);
+    this->adj_list.erase(it, this->adj_list.end());
     this->nodes_count--;
-}
-
-// TODO: Add tests.
-void adjacency_list::add_edge(node_ptr node_i, node_ptr node_f) {
-    auto it = this->find_entry(node_i);
-    if (it == this->adj_list.end()) this->add_node(*node_i);
-
-    it->second.push_back(node_f);
-}
-
-// TODO: Add tests.
-void adjacency_list::remove_edge(node_ptr node_i, node_ptr node_f) {
-    auto it = this->find_entry(node_i);
-    if (it == this->adj_list.end()) return;
-
-    auto adjacent = it->second;
-    adjacent.erase(
-        std::remove_if(adjacent.begin(), adjacent.end(),
-                       [node_f](node_ptr focus_node) { return *node_f == *focus_node; }),
-        adjacent.end());
 }
 
 bool adjacency_list::contains_node(node_ptr search_node) {
     return this->find_entry(search_node) != this->adj_list.end();
 }
 
+void adjacency_list::add_edge(node_ptr node_i, node_ptr node_f) {
+    auto it_node_i = this->find_entry(node_i);
+    if (it_node_i == this->adj_list.end()) this->add_node(*node_i);
+
+    auto it_node_f = this->find_entry(node_f);
+    if (it_node_f == this->adj_list.end()) this->add_node(*node_f);
+
+    auto it_edge = this->find_node(it_node_i->second, node_f);
+    if (it_edge != it_node_i->second.end()) return;
+
+    it_node_i->second.push_back(node_f);
+}
+
+void adjacency_list::remove_edge(node_ptr node_i, node_ptr node_f) {
+    auto it_node_i = this->find_entry(node_i);
+    if (it_node_i == this->adj_list.end()) return;
+
+    auto it_edge = this->find_node(it_node_i->second, node_f);
+    if (it_edge == it_node_i->second.end()) return;
+
+    it_node_i->second.erase(it_edge, it_node_i->second.end());
+}
+
 size_t adjacency_list::get_nodes_count() {
     return this->nodes_count;
+}
+
+size_t adjacency_list::get_edges_count() {
+    size_t edge_counts = 0;
+
+    for (auto entry : this->adj_list) {
+        edge_counts += entry.second.size();
+    }
+
+    return edge_counts;
 }
 
 std::vector<node_ptr> adjacency_list::get_nodes() {

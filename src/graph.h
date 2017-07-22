@@ -40,6 +40,11 @@ namespace graph {
     typedef std::shared_ptr<node> node_ptr;
 
     /**
+     * Iterator of node_ptr entries.
+     */
+    typedef std::vector<node_ptr>::iterator node_ptr_iterator;
+
+    /**
      * Entry in the adjacency list.
      */
     typedef std::pair<node, std::vector<node_ptr>> adjacency_list_entry;
@@ -56,12 +61,14 @@ namespace graph {
         void add_node(node new_node);
         void remove_node(node_ptr remove_node);
 
+        bool contains_node(node_ptr search_node);
+
         void add_edge(node_ptr node_i, node_ptr node_f);
         void remove_edge(node_ptr node_i, node_ptr node_f);
 
-        bool contains_node(node_ptr search_node);
-
         size_t get_nodes_count();
+        size_t get_edges_count();
+
         std::vector<node_ptr> get_nodes();
         std::vector<node_ptr> get_connected_to(node_ptr node_f);
         std::vector<node_ptr> get_connected_from(node_ptr node_i);
@@ -70,6 +77,12 @@ namespace graph {
         size_t nodes_count;
 
         std::vector<adjacency_list_entry> adj_list;
+
+        inline node_ptr_iterator find_node(std::vector<node_ptr> v, node_ptr n) {
+            return std::find_if(v.begin(), v.end(), [n](node_ptr focus_node) {
+                return *n == *focus_node;
+            });
+        }
 
         inline adj_list_iterator find_entry(node_ptr search_node) {
             // clang-format off

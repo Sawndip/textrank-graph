@@ -86,5 +86,103 @@ TEST(graph, contains_node) {
 
     new_graph.add_node(new_node);
 
-    EXPECT_TRUE(new_graph.contains_node(std::make_shared<node>(new_node)));
+    ASSERT_TRUE(new_graph.contains_node(std::make_shared<node>(new_node)));
+}
+
+TEST(graph, add_edge) {
+    node node_a("A", 0);
+    node node_b("B", 0);
+    adjacency_list new_graph(2);
+
+    new_graph.add_node(node_a);
+    new_graph.add_node(node_b);
+    EXPECT_EQ(new_graph.get_nodes_count(), 2);
+
+    new_graph.add_edge(std::make_shared<node>(node_a), std::make_shared<node>(node_b));
+
+    ASSERT_EQ(new_graph.get_edges_count(), 1);
+}
+
+TEST(graph, add_edge_adds_new_node_i) {
+    node node_a("A", 0);
+    node node_b("B", 0);
+    adjacency_list new_graph(2);
+
+    new_graph.add_node(node_b);
+    EXPECT_EQ(new_graph.get_nodes_count(), 1);
+
+    new_graph.add_edge(std::make_shared<node>(node_a), std::make_shared<node>(node_b));
+
+    EXPECT_EQ(new_graph.get_edges_count(), 1);
+    ASSERT_EQ(new_graph.get_nodes_count(), 2);
+}
+
+TEST(graph, add_edge_adds_new_node_f) {
+    node node_a("A", 0);
+    node node_b("B", 0);
+    adjacency_list new_graph(2);
+
+    new_graph.add_node(node_a);
+    EXPECT_EQ(new_graph.get_nodes_count(), 1);
+
+    new_graph.add_edge(std::make_shared<node>(node_a), std::make_shared<node>(node_b));
+
+    EXPECT_EQ(new_graph.get_edges_count(), 1);
+    ASSERT_EQ(new_graph.get_nodes_count(), 2);
+}
+
+TEST(graph, add_edge_adds_both_new_nodes) {
+    node node_a("A", 0);
+    node node_b("B", 0);
+    adjacency_list new_graph(2);
+
+    new_graph.add_edge(std::make_shared<node>(node_a), std::make_shared<node>(node_b));
+
+    EXPECT_EQ(new_graph.get_edges_count(), 1);
+    ASSERT_EQ(new_graph.get_nodes_count(), 2);
+}
+
+TEST(graph, add_duplicate_edge) {
+    node node_a("A", 0);
+    node node_b("B", 0);
+    adjacency_list new_graph(2);
+
+    new_graph.add_edge(std::make_shared<node>(node_a), std::make_shared<node>(node_b));
+    EXPECT_EQ(new_graph.get_edges_count(), 1);
+    EXPECT_EQ(new_graph.get_nodes_count(), 2);
+
+    new_graph.add_edge(std::make_shared<node>(node_a), std::make_shared<node>(node_b));
+    ASSERT_EQ(new_graph.get_edges_count(), 1);
+    ASSERT_EQ(new_graph.get_nodes_count(), 2);
+}
+
+TEST(graph, remove_edge) {
+    node node_a("A", 0);
+    node node_b("B", 0);
+    adjacency_list new_graph(2);
+
+    new_graph.add_edge(std::make_shared<node>(node_a), std::make_shared<node>(node_b));
+    EXPECT_EQ(new_graph.get_edges_count(), 1);
+    EXPECT_EQ(new_graph.get_nodes_count(), 2);
+
+    new_graph.remove_edge(std::make_shared<node>(node_a), std::make_shared<node>(node_b));
+    ASSERT_EQ(new_graph.get_edges_count(), 0);
+    ASSERT_EQ(new_graph.get_nodes_count(), 2);
+}
+
+TEST(graph, remove_edge_not_in_graph) {
+    node node_a("A", 0);
+    node node_b("B", 0);
+    node node_c("C", 0);
+    adjacency_list new_graph(3);
+
+    new_graph.add_node(node_c);
+
+    new_graph.add_edge(std::make_shared<node>(node_a), std::make_shared<node>(node_b));
+    EXPECT_EQ(new_graph.get_edges_count(), 1);
+    EXPECT_EQ(new_graph.get_nodes_count(), 3);
+
+    new_graph.remove_edge(std::make_shared<node>(node_a), std::make_shared<node>(node_c));
+    ASSERT_EQ(new_graph.get_edges_count(), 1);
+    ASSERT_EQ(new_graph.get_nodes_count(), 3);
 }
