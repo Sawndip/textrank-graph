@@ -79,9 +79,11 @@ namespace graph {
         std::vector<adjacency_list_entry> adj_list;
 
         inline node_ptr_iterator find_node(std::vector<node_ptr> v, node_ptr n) {
-            return std::find_if(v.begin(), v.end(), [n](node_ptr focus_node) {
-                return *n == *focus_node;
+            // clang-format off
+            return std::find_if(v.begin(), v.end(), [n](node_ptr search_node) {
+                return *n == *search_node;
             });
+            // clang-format on
         }
 
         inline adj_list_iterator find_entry(node_ptr search_node) {
