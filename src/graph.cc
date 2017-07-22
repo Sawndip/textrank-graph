@@ -1,6 +1,8 @@
 #include "graph.h"
 
 #include <algorithm>
+#include <memory>
+#include <utility>
 #include <vector>
 
 using namespace graph;
@@ -34,6 +36,7 @@ void adjacency_list::remove_node(node_ptr remove_node) {
     this->nodes_count--;
 }
 
+// TODO: Add tests.
 void adjacency_list::add_edge(node_ptr node_i, node_ptr node_f) {
     auto it = this->find_entry(node_i);
     if (it == this->adj_list.end()) this->add_node(*node_i);
@@ -41,6 +44,7 @@ void adjacency_list::add_edge(node_ptr node_i, node_ptr node_f) {
     it->second.push_back(node_f);
 }
 
+// TODO: Add tests.
 void adjacency_list::remove_edge(node_ptr node_i, node_ptr node_f) {
     auto it = this->find_entry(node_i);
     if (it == this->adj_list.end()) return;
@@ -69,4 +73,39 @@ std::vector<node_ptr> adjacency_list::get_nodes() {
     }
 
     return nodes;
+}
+
+/**
+ * Gets nodes that are connected to `node_f`.
+ *
+ * TODO: Add tests.
+ */
+std::vector<node_ptr> adjacency_list::get_connected_to(node_ptr node_f) {
+    std::vector<node_ptr> connected_to{};
+
+    for (auto entry : this->adj_list) {
+        auto it = std::find_if(
+            entry.second.begin(), entry.second.end(),
+            [node_f](node_ptr& search_node) { return *node_f == *search_node; });
+
+        if (it != entry.second.end()) {
+            connected_to.push_back(std::make_shared<node>(entry.first));
+        }
+    }
+
+    return connected_to;
+}
+
+/**
+ * Gets nodes that `node_i` is connected to.
+ *
+ * TODO: Add tests.
+ */
+std::vector<node_ptr> adjacency_list::get_connected_from(node_ptr node_i) {
+    auto it = this->find_entry(node_i);
+
+    if (it == this->adj_list.end()) {
+        return std::vector<node_ptr>{};
+    }
+    return it->second;
 }

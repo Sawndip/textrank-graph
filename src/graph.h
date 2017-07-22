@@ -52,12 +52,8 @@ namespace graph {
 
         size_t get_nodes_count();
         std::vector<node_ptr> get_nodes();
-
-        // List of nodes that are connected to the specified node.
-        std::vector<node> get_connected_to(node);
-
-        // List of nodes that are the specified node is connected to.
-        std::vector<node> get_connected_from(node);
+        std::vector<node_ptr> get_connected_to(node_ptr node_f);
+        std::vector<node_ptr> get_connected_from(node_ptr node_i);
 
     private:
         size_t nodes_count;
