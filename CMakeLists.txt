@@ -41,3 +41,5 @@ include_directories(${GTEST_INCLUDE_DIRS})
 # Create executable for testing and link libraries.
 add_executable(test-helium tests/test_main.cc ${TESTS})
 target_link_libraries(test-helium src pthread ${GTEST_BOTH_LIBRARIES})
+
+add_test(NAME tests COMMAND test-helium)
