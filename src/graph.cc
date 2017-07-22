@@ -32,10 +32,6 @@ void adjacency_list::remove_node(node_ptr remove_node) {
     auto it = this->find_entry(remove_node);
     if (it == this->adj_list.end()) return;
 
-    // NOTE: Possible optimization.
-    // Instead of erasing the element, which would require all subsequent elements to be
-    // shifted up by one, `swap` and then `pop_back`. The swap function would be
-    // `std::swap(*it_edge, it_node_i->second.back());`
     this->adj_list.erase(it, this->adj_list.end());
     this->nodes_count--;
 }
@@ -64,11 +60,7 @@ void adjacency_list::remove_edge(node_ptr node_i, node_ptr node_f) {
     auto it_edge = this->find_node(it_node_i->second, node_f);
     if (it_edge == it_node_i->second.end()) return;
 
-    // NOTE: Possible optimization.
-    // Instead of erasing the element, which would require all subsequent elements to be
-    // shifted up by one, `swap` and then `pop_back`. The swap function would be
-    // `std::swap(*it_edge, it_node_i->second.back());`
-    it_node_i->second.erase(it_edge, it_node_i->second.end());
+    it_node_i->second.erase(it_edge);
 }
 
 size_t adjacency_list::get_nodes_count() {
@@ -99,8 +91,6 @@ std::vector<node_ptr> adjacency_list::get_nodes() {
 /**
  * Get nodes that are connected to `node_f`.
  * @param node_f Final node.
- *
- * TODO: Add tests.
  */
 std::vector<node_ptr> adjacency_list::get_connected_to(node_ptr node_f) {
     std::vector<node_ptr> connected_to{};
@@ -121,8 +111,6 @@ std::vector<node_ptr> adjacency_list::get_connected_to(node_ptr node_f) {
 /**
  * Get nodes that `node_i` is connected to.
  * @param node_i Initial node.
- *
- * TODO: Add tests.
  */
 std::vector<node_ptr> adjacency_list::get_connected_from(node_ptr node_i) {
     auto it = this->find_entry(node_i);

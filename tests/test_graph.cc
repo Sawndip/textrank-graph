@@ -186,3 +186,31 @@ TEST(graph, remove_edge_not_in_graph) {
     ASSERT_EQ(new_graph.get_edges_count(), 1);
     ASSERT_EQ(new_graph.get_nodes_count(), 3);
 }
+
+TEST(graph, get_connected_to) {
+    node node_a("A", 0);
+    node node_b("B", 0);
+    adjacency_list new_graph(2);
+
+    new_graph.add_edge(std::make_shared<node>(node_a), std::make_shared<node>(node_b));
+    EXPECT_EQ(new_graph.get_edges_count(), 1);
+    EXPECT_EQ(new_graph.get_nodes_count(), 2);
+
+    auto connected_nodes = new_graph.get_connected_to(std::make_shared<node>(node_b));
+    ASSERT_EQ(connected_nodes.size(), 1);
+    ASSERT_TRUE(*(connected_nodes[0]) == node_a);
+}
+
+TEST(graph, get_connected_from) {
+    node node_a("A", 0);
+    node node_b("B", 0);
+    adjacency_list new_graph(2);
+
+    new_graph.add_edge(std::make_shared<node>(node_a), std::make_shared<node>(node_b));
+    EXPECT_EQ(new_graph.get_edges_count(), 1);
+    EXPECT_EQ(new_graph.get_nodes_count(), 2);
+
+    auto connected_nodes = new_graph.get_connected_from(std::make_shared<node>(node_a));
+    ASSERT_EQ(connected_nodes.size(), 1);
+    ASSERT_TRUE(*(connected_nodes[0]) == node_b);
+}
