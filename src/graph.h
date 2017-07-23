@@ -6,13 +6,17 @@
 #include <utility>
 #include <vector>
 
-// TODO: Inline documentation.
-
-// For node variations we are using a vector instead of an unordered_set because a linear
-// search is going to be faster than a hash table lookup and compare for the reasonable
-// small number of variations.
-
+/**
+ * Graph represented by an adjacency list.
+ *
+ * For the graph's nodes, variations are stored using a vector instead of an unordered set.
+ * This is because a linear search is going to be faster than a hash table lookup and
+ * compare for the reasonably small number of variations a node will have.
+ */
 namespace graph {
+    /**
+     * Node in the graph.
+     */
     class node {
     public:
         double score;
@@ -54,6 +58,9 @@ namespace graph {
      */
     typedef std::vector<adjacency_list_entry>::iterator adj_list_iterator;
 
+    /**
+     * Adjacency list representation of a graph.
+     */
     class adjacency_list {
     public:
         adjacency_list(size_t n_nodes);
