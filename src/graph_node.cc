@@ -8,8 +8,8 @@ using namespace graph;
 
 /**
  * Create new node.
- * @param data Data of the node.
- * @param score Initial node score.
+ * \param data Data of the node.
+ * \param score Initial node score.
  */
 node::node(std::string data, double score) {
     this->data = data;
@@ -18,7 +18,7 @@ node::node(std::string data, double score) {
 
 /**
  * Compares equality of nodes. Equality is based purely on the `data` of the node.
- * @param n Node to compare to.
+ * \param n Node to compare to.
  */
 bool node::operator==(node const& n) {
     return this->data == n.data;
@@ -26,7 +26,7 @@ bool node::operator==(node const& n) {
 
 /**
  * Adds a variation to the node.
- * @param data Variation to add.
+ * \param data Variation to add.
  */
 void node::add_variation(std::string data) {
     if (this->has_variation(data)) return;
@@ -35,7 +35,7 @@ void node::add_variation(std::string data) {
 
 /**
  * Removes a variation from the node.
- * @param data Variation to remove.
+ * \param data Variation to remove.
  */
 void node::remove_variation(std::string data) {
     this->variations.erase(
@@ -45,7 +45,7 @@ void node::remove_variation(std::string data) {
 
 /**
  * Checks if the node has a variation.
- * @param data Variation to search for.
+ * \param data Variation to search for.
  */
 bool node::has_variation(std::string data) {
     return std::find(this->variations.begin(), this->variations.end(), data) !=

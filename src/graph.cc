@@ -9,7 +9,7 @@ using namespace graph;
 
 /**
  * Create new adjacency list.
- * @param n_nodes Expected amount of nodes.
+ * \param n_nodes Expected amount of nodes.
  */
 adjacency_list::adjacency_list(size_t n_nodes) {
     this->nodes_count = 0;
@@ -20,7 +20,7 @@ adjacency_list::adjacency_list(size_t n_nodes) {
 
 /**
  * Add node to the adjacency list. Duplicate nodes will not be added twice.
- * @param new_node New node to add.
+ * \param new_node New node to add.
  */
 void adjacency_list::add_node(node new_node) {
     if (this->contains_node(std::make_shared<node>(new_node))) return;
@@ -39,7 +39,7 @@ void adjacency_list::add_node(node new_node) {
 /**
  * Remove node from the adjacency list.
  * TODO: Remove all edges as well.
- * @param remove_node Node to remove.
+ * \param remove_node Node to remove.
  */
 void adjacency_list::remove_node(node_ptr remove_node) {
     auto it = this->find_entry(remove_node);
@@ -51,7 +51,7 @@ void adjacency_list::remove_node(node_ptr remove_node) {
 
 /**
  * Check if node exists in the adjacency list.
- * @param search_node Node to search for.
+ * \param search_node Node to search for.
  */
 bool adjacency_list::contains_node(node_ptr search_node) {
     return this->find_entry(search_node) != this->adj_list.end();
@@ -60,8 +60,8 @@ bool adjacency_list::contains_node(node_ptr search_node) {
 /**
  * Adds an edge (directed, unweighted) to the adjacency list. If the nodes of the edge
  * don't exist then they will be added as well. Duplicate edges will not be added twice.
- * @param node_i Initial node for the edge.
- * @param node_f Final node for the edge.
+ * \param node_i Initial node for the edge.
+ * \param node_f Final node for the edge.
  */
 void adjacency_list::add_edge(node_ptr node_i, node_ptr node_f) {
     auto it_node_i = this->find_entry(node_i);
@@ -78,8 +78,8 @@ void adjacency_list::add_edge(node_ptr node_i, node_ptr node_f) {
 
 /**
  * Removes an edge from the adjacnecy list. Associated nodes are not removed.
- * @param node_i Initial node for the edge.
- * @param node_f Final node for the edge.
+ * \param node_i Initial node for the edge.
+ * \param node_f Final node for the edge.
  */
 void adjacency_list::remove_edge(node_ptr node_i, node_ptr node_f) {
     auto it_node_i = this->find_entry(node_i);
@@ -127,7 +127,7 @@ std::vector<node_ptr> adjacency_list::get_nodes() {
 
 /**
  * Get nodes that are connected to `node_f`.
- * @param node_f Final node.
+ * \param node_f Final node.
  */
 std::vector<node_ptr> adjacency_list::get_connected_to(node_ptr node_f) {
     std::vector<node_ptr> connected_to{};
@@ -147,7 +147,7 @@ std::vector<node_ptr> adjacency_list::get_connected_to(node_ptr node_f) {
 
 /**
  * Get nodes that `node_i` is connected to.
- * @param node_i Initial node.
+ * \param node_i Initial node.
  */
 std::vector<node_ptr> adjacency_list::get_connected_from(node_ptr node_i) {
     auto it = this->find_entry(node_i);
