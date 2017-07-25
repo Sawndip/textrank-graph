@@ -5,7 +5,17 @@ set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Wall -Werror")
 
 ##############################################################################
-# Helium
+# Helium Library
+##############################################################################
+
+# Find main sources in `lib` directory.
+file(GLOB_RECURSE LIBRARY lib/*.cc lib/*.h)
+
+# Add library for the source files.
+add_library(lib ${LIBRARY})
+
+##############################################################################
+# Helium Main
 ##############################################################################
 
 # Find main sources in `src` directory.
@@ -16,7 +26,7 @@ add_library(src ${SOURCES})
 
 # Create executable and link libraries.
 add_executable(helium src/main.cc)
-target_link_libraries(helium src)
+target_link_libraries(helium lib src)
 
 ##############################################################################
 # Helium Testing
@@ -37,7 +47,7 @@ include_directories(${GTEST_INCLUDE_DIRS})
 
 # Create executable for testing and link libraries.
 add_executable(test-helium tests/test_main.cc ${TESTS})
-target_link_libraries(test-helium src pthread ${GTEST_BOTH_LIBRARIES})
+target_link_libraries(test-helium lib src pthread ${GTEST_BOTH_LIBRARIES})
 
 add_test(NAME tests COMMAND test-helium)
 

@@ -3,7 +3,7 @@
 
 #include <gtest/gtest.h>
 
-#include "../src/graph.h"
+#include "../lib/graph.h"
 
 using namespace graph;
 
