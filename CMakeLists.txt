@@ -4,9 +4,6 @@ project(helium)
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Wall -Werror")
 
-# Include `include` directory.
-include_directories(include)
-
 ##############################################################################
 # Helium
 ##############################################################################
