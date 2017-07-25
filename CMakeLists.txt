@@ -50,24 +50,3 @@ add_executable(test-helium tests/test_main.cc ${TESTS})
 target_link_libraries(test-helium lib src pthread ${GTEST_BOTH_LIBRARIES})
 
 add_test(NAME tests COMMAND test-helium)
-
-##############################################################################
-# Helium Documentation
-##############################################################################
-
-# Include Doxygen.
-find_package(Doxygen)
-
-if(DOXYGEN_FOUND)
-    # Copy Doxyfile from source dir to binary dir.
-    configure_file(
-        ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in
-        ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
-    )
-
-    # Add target to build docs.
-    add_custom_target(docs
-        ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-    )
-endif(DOXYGEN_FOUND)
