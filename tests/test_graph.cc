@@ -51,33 +51,6 @@ TEST(graph, add_duplicate_node) {
     ASSERT_TRUE(*(new_graph.get_nodes()[0]) == new_node);
 }
 
-TEST(graph, remove_node) {
-    node new_node("N", 0);
-    adjacency_list new_graph(1);
-
-    new_graph.add_node(new_node);
-    EXPECT_EQ(new_graph.get_nodes_count(), 1);
-
-    new_graph.remove_node(std::make_shared<node>(new_node));
-
-    ASSERT_EQ(new_graph.get_nodes_count(), 0);
-    ASSERT_TRUE(new_graph.get_nodes().empty());
-}
-
-TEST(graph, remove_node_not_in_graph) {
-    node node_a("A", 0);
-    node node_b("B", 0);
-    adjacency_list new_graph(1);
-
-    new_graph.add_node(node_a);
-    EXPECT_EQ(new_graph.get_nodes_count(), 1);
-
-    new_graph.remove_node(std::make_shared<node>(node_b));
-
-    ASSERT_EQ(new_graph.get_nodes_count(), 1);
-    ASSERT_TRUE(*(new_graph.get_nodes()[0]) == node_a);
-}
-
 TEST(graph, contains_node) {
     node new_node("N", 0);
     adjacency_list new_graph(1);
@@ -152,34 +125,6 @@ TEST(graph, add_duplicate_edge) {
     EXPECT_EQ(new_graph.get_nodes_count(), 2);
 
     new_graph.add_edge(std::make_shared<node>(node_a), std::make_shared<node>(node_b));
-    ASSERT_EQ(new_graph.get_edges_count(), 1);
-    ASSERT_EQ(new_graph.get_nodes_count(), 2);
-}
-
-TEST(graph, remove_edge) {
-    node node_a("A", 0);
-    node node_b("B", 0);
-    adjacency_list new_graph(2);
-
-    new_graph.add_edge(std::make_shared<node>(node_a), std::make_shared<node>(node_b));
-    EXPECT_EQ(new_graph.get_edges_count(), 1);
-    EXPECT_EQ(new_graph.get_nodes_count(), 2);
-
-    new_graph.remove_edge(std::make_shared<node>(node_a), std::make_shared<node>(node_b));
-    ASSERT_EQ(new_graph.get_edges_count(), 0);
-    ASSERT_EQ(new_graph.get_nodes_count(), 2);
-}
-
-TEST(graph, remove_edge_not_in_graph) {
-    node node_a("A", 0);
-    node node_b("B", 0);
-    adjacency_list new_graph(2);
-
-    new_graph.add_edge(std::make_shared<node>(node_a), std::make_shared<node>(node_b));
-    EXPECT_EQ(new_graph.get_edges_count(), 1);
-    EXPECT_EQ(new_graph.get_nodes_count(), 2);
-
-    new_graph.remove_edge(std::make_shared<node>(node_b), std::make_shared<node>(node_a));
     ASSERT_EQ(new_graph.get_edges_count(), 1);
     ASSERT_EQ(new_graph.get_nodes_count(), 2);
 }

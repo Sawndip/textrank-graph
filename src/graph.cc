@@ -37,19 +37,6 @@ void adjacency_list::add_node(node new_node) {
 }
 
 /**
- * Remove node from the adjacency list.
- * TODO: Remove all edges as well.
- * \param remove_node Node to remove.
- */
-void adjacency_list::remove_node(node_ptr remove_node) {
-    auto it = this->find_entry(remove_node);
-    if (it == this->adj_list.end()) return;
-
-    this->adj_list.erase(it, this->adj_list.end());
-    this->nodes_count--;
-}
-
-/**
  * Check if node exists in the adjacency list.
  * \param search_node Node to search for.
  */
@@ -74,21 +61,6 @@ void adjacency_list::add_edge(node_ptr node_i, node_ptr node_f) {
     if (it_edge != it_node_i->second.end()) return;
 
     it_node_i->second.push_back(node_f);
-}
-
-/**
- * Removes an edge from the adjacnecy list. Associated nodes are not removed.
- * \param node_i Initial node for the edge.
- * \param node_f Final node for the edge.
- */
-void adjacency_list::remove_edge(node_ptr node_i, node_ptr node_f) {
-    auto it_node_i = this->find_entry(node_i);
-    if (it_node_i == this->adj_list.end()) return;
-
-    auto it_edge = this->find_node(it_node_i->second, node_f);
-    if (it_edge == it_node_i->second.end()) return;
-
-    it_node_i->second.erase(it_edge);
 }
 
 /**
@@ -118,7 +90,7 @@ std::vector<node_ptr> adjacency_list::get_nodes() {
     std::vector<node_ptr> nodes{};
     nodes.reserve(this->nodes_count);
 
-    for (auto const& entry : this->adj_list) {
+    for (auto const entry : this->adj_list) {
         nodes.push_back(std::make_shared<node>(entry.first));
     }
 

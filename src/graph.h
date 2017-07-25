@@ -66,12 +66,9 @@ namespace graph {
         adjacency_list(size_t n_nodes);
 
         void add_node(node new_node);
-        void remove_node(node_ptr remove_node);
+        void add_edge(node_ptr node_i, node_ptr node_f);
 
         bool contains_node(node_ptr search_node);
-
-        void add_edge(node_ptr node_i, node_ptr node_f);
-        void remove_edge(node_ptr node_i, node_ptr node_f);
 
         size_t get_nodes_count();
         size_t get_edges_count();
