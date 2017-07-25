@@ -22,6 +22,7 @@ namespace graph {
         double score;
         std::string data;
 
+        node() : node("", 0) {}
         node(std::string data, double score);
 
         bool operator==(node const& n);
@@ -63,6 +64,7 @@ namespace graph {
      */
     class adjacency_list {
     public:
+        adjacency_list() : adjacency_list(0) {}
         adjacency_list(size_t n_nodes);
 
         void add_node(node new_node);
