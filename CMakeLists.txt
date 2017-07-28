@@ -2,7 +2,9 @@ cmake_minimum_required(VERSION 3.0)
 project(helium)
 
 set(CMAKE_BUILD_TYPE Debug)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Wall -Werror")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Werror")
+
+include(ExternalProject)
 
 ##############################################################################
 # Helium Library
@@ -13,6 +15,19 @@ file(GLOB_RECURSE LIBRARY lib/*.cc lib/*.h)
 
 # Add library for the source files.
 add_library(lib ${LIBRARY})
+
+##############################################################################
+# External Libraries
+##############################################################################
+
+ExternalProject_Add(
+    meta-toolkit
+    PREFIX ${CMAKE_BINARY_DIR}/meta
+    CMAKE_ARGS
+        -DCMAKE_BUILD_TYPE:string=${CMAKE_BUILD_TYPE}
+        -DCMAKE_INSTALL_PREFIX:path=<INSTALL_DIR>
+    SOURCE_DIR ${CMAKE_SOURCE_DIR}/external/meta
+)
 
 ##############################################################################
 # Helium Main
