@@ -12,9 +12,12 @@ file(GLOB_RECURSE SOURCES src/*.cc src/*.h)
 add_library(lib ${LIBRARY})
 add_library(src ${SOURCES})
 
+# Load packages.
+find_package(Boost REQUIRED)
+
 # Create executable and link libraries.
 add_executable(helium src/main.cc)
-target_link_libraries(helium lib src)
+target_link_libraries(helium lib src ${Boost_LIBRARIES})
 
 # Enable testing and add test command.
 enable_testing()
