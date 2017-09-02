@@ -4,20 +4,11 @@ project(helium)
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Wall -Werror")
 
-# Find main sources in `src` and `lib` directories.
+# Find main sources in `lib` directories.
 file(GLOB_RECURSE LIBRARY lib/*.cc lib/*.h)
-file(GLOB_RECURSE SOURCES src/*.cc src/*.h)
 
 # Add source and library.
 add_library(lib ${LIBRARY})
-add_library(src ${SOURCES})
-
-# Load packages.
-find_package(Boost REQUIRED)
-
-# Create executable and link libraries.
-add_executable(helium src/main.cc)
-target_link_libraries(helium lib src ${Boost_LIBRARIES})
 
 # Enable testing and add test command.
 enable_testing()
@@ -31,6 +22,6 @@ include_directories(${GTEST_INCLUDE_DIRS})
 
 # Create executable for testing and link libraries.
 add_executable(test-helium tests/test_main.cc ${TESTS})
-target_link_libraries(test-helium lib src pthread ${GTEST_BOTH_LIBRARIES})
+target_link_libraries(test-helium lib pthread ${GTEST_BOTH_LIBRARIES})
 
 add_test(NAME tests COMMAND test-helium)
